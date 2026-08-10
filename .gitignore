@@ -1,0 +1,11 @@
+.env
+.env.*
+!.env.example
+
+data/
+*.log
+.DS_Store
+.claude/
+.gstack/
+tmp/
+*.tmp
