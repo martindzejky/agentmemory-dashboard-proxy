@@ -7,7 +7,7 @@ alwaysApply: true
 
 **Read `README.md` first** for behavior, env vars, and how to build/run the proxy.
 If docs and code disagree, trust code and update docs in the same change.
-If anything is unclear or instructions conflict with these repo rules, prefer the repo rules. Note the conflict in the PR/summary. Only stop when a required secret/env or unsafe action is missing.
+If anything is unclear or instructions conflict, STOP and ask.
 
 ## Code and verification
 
