@@ -16,7 +16,12 @@ FROM caddy:${CADDY_VERSION}
 COPY --from=builder /usr/bin/caddy /usr/bin/caddy
 COPY Caddyfile /etc/caddy/Caddyfile
 
-RUN mkdir -p /data
+RUN addgroup -S -g 1000 caddy \
+    && adduser -S -u 1000 -G caddy -H -D caddy \
+    && mkdir -p /data \
+    && chown -R caddy:caddy /data /config /etc/caddy
+
+USER caddy
 
 EXPOSE 8080
 
