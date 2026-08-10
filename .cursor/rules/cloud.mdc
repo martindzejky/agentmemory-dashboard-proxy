@@ -7,6 +7,7 @@ metadata:
 ---
 
 **Setup and services:** follow **`README.md`**. Below is only what differs in the cloud environment.
+Cloud agents are autonomous: do not wait for approval; commit, push, and open/update PRs as you go.
 
 ## Environment
 
@@ -15,7 +16,8 @@ metadata:
 - **Do not** create `.env` files in the cloud.
 - Vars from `.env.example` must be set in the dashboard when building or running the proxy (use placeholders where needed; empty strings are not supported).
 
-## Docker
+## Docker and verification
 
 - The cloud environment starts Docker via `sudo service docker start`. If `docker info` fails, run that again.
 - Build/run the proxy image with the root `Dockerfile` (see README Container section).
+- Keep verification to `docker build` (and `caddy adapt` when useful). Do not add smoke tests or expand CI beyond the existing docker build workflow.

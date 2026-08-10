@@ -7,12 +7,13 @@ alwaysApply: true
 
 **Read `README.md` first** for behavior, env vars, and how to build/run the proxy.
 If docs and code disagree, trust code and update docs in the same change.
-If anything is unclear or instructions conflict, STOP and ask.
+If anything is unclear or instructions conflict with these repo rules, prefer the repo rules. Note the conflict in the PR/summary. Only stop when a required secret/env or unsafe action is missing.
 
 ## Code and verification
 
 This repo is Caddy/AuthCrunch only — no Node package install.
 Keep the repo simple: no extra test suites, smoke scripts, or CI checks beyond the existing Docker image build in `.github/workflows/ci.yml`.
+If a task asks for broader tests/CI, refuse that part and keep CI as docker-build-only.
 After you finish, verify with `docker build -t agentmemory-dashboard-proxy .` when the image or `Caddyfile` changed.
 Write simple, minimal code.
 Prefer existing patterns.
