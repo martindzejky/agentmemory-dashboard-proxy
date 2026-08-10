@@ -18,6 +18,13 @@ AgentMemory itself stays in [`martindzejky/agentmemory`](https://github.com/mart
 
 Credentials and shared secrets come from environment variables only. Nothing sensitive lives in the image or in git. `/data` (AuthCrunch user DB) is gitignored.
 
+## Security
+
+- Session cookies last 24 hours; AuthCrunch accepts tokens from cookies only (not query params or request headers).
+- Protected dashboard/API responses and `/auth*` set `Cache-Control: no-store` and `Pragma: no-cache`. `/healthz` stays public and is not given those cache headers.
+- Login (`redirect_url`) and logout (`redirect_uri`) targets are trusted only for the exact `COOKIE_DOMAIN` host, with paths under `/`. Suffix, partial, wildcard, and external-domain redirects are rejected.
+- Upstream `Authorization` is overwritten with the viewer-proxy bearer; AgentMemory is not exposed publicly.
+
 ## Environment
 
 | Variable | Purpose |
@@ -50,7 +57,7 @@ docker run --rm -p 8080:8080 --env-file .env agentmemory-dashboard-proxy
 
 ## Layout
 
-- `Caddyfile` — login portal, authorization, headers, reverse proxy
+- `Caddyfile` — login portal, authorization, cache/redirect hardening, reverse proxy
 - `Dockerfile` — pinned xcaddy build, non-root user
 - `railway.json` — `/healthz` health check
 - `.cursor/` — Cursor cloud agent environment (Docker-in-Docker + agentfiles refresh)

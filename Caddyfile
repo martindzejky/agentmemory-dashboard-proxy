@@ -25,6 +25,8 @@
 			crypto key sign-verify {env.JWT_SHARED_KEY}
 			enable identity store localdb
 			cookie domain {$COOKIE_DOMAIN}
+			trust login redirect uri domain exact {$COOKIE_DOMAIN} path prefix /
+			trust logout redirect uri domain exact {$COOKIE_DOMAIN} path prefix /
 			ui {
 				links {
 					"AgentMemory" "/" icon "las la-home"
@@ -38,6 +40,7 @@
 
 		authorization policy dashboard_policy {
 			set auth url /auth/login
+			set token sources cookie
 			allow roles authp/admin authp/user
 			crypto key verify {env.JWT_SHARED_KEY}
 		}
@@ -58,10 +61,18 @@
 	}
 
 	handle /auth* {
+		header {
+			Cache-Control "no-store"
+			Pragma "no-cache"
+		}
 		authenticate with dashboard_portal
 	}
 
 	handle {
+		header {
+			Cache-Control "no-store"
+			Pragma "no-cache"
+		}
 		authorize with dashboard_policy
 		reverse_proxy {$UPSTREAM_URL} {
 			header_up Authorization "Bearer {env.AGENTMEMORY_VIEWER_PROXY_SECRET}"

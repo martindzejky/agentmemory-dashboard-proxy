@@ -12,6 +12,7 @@ If anything is unclear or instructions conflict, STOP and ask.
 ## Code and verification
 
 This repo is Caddy/AuthCrunch only — no Node package install.
+Keep the repo simple: no extra test suites, smoke scripts, or CI checks beyond the existing Docker image build in `.github/workflows/ci.yml`.
 After you finish, verify with `docker build -t agentmemory-dashboard-proxy .` when the image or `Caddyfile` changed.
 Write simple, minimal code.
 Prefer existing patterns.
