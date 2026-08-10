@@ -1,0 +1,19 @@
+---
+description: Agent context and workflow
+alwaysApply: true
+---
+
+# Agent instructions
+
+**Read `README.md` first** for behavior, env vars, and how to build/run the proxy.
+If docs and code disagree, trust code and update docs in the same change.
+If anything is unclear or instructions conflict, STOP and ask.
+
+## Code and verification
+
+This repo is Caddy/AuthCrunch only — no Node package install.
+After you finish, verify with `docker build -t agentmemory-dashboard-proxy .` when the image or `Caddyfile` changed.
+Write simple, minimal code.
+Prefer existing patterns.
+Do not add unrequested features or APIs.
+Keep secrets in env vars only; never commit `.env` or credentials.

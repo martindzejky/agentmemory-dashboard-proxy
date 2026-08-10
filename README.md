@@ -53,7 +53,7 @@ docker run --rm -p 8080:8080 --env-file .env agentmemory-dashboard-proxy
 - `Caddyfile` — login portal, authorization, headers, reverse proxy
 - `Dockerfile` — pinned xcaddy build, non-root user
 - `railway.json` — `/healthz` health check
-- `.cursor/` — Cursor cloud agent environment (agentfiles refresh only)
+- `.cursor/` — Cursor cloud agent environment (Docker-in-Docker + agentfiles refresh)
 
 ## Railway
 
