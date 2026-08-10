@@ -16,13 +16,10 @@ FROM caddy:${CADDY_VERSION}
 COPY --from=builder /usr/bin/caddy /usr/bin/caddy
 COPY Caddyfile /etc/caddy/Caddyfile
 
-# Official caddy image runs as root; create a dedicated user for Railway
-# (PORT is unprivileged). /data holds AuthCrunch users.json.
-RUN set -eux; \
-    addgroup -S -g 1000 caddy; \
-    adduser -S -u 1000 -G caddy -H -D -s /sbin/nologin caddy; \
-    mkdir -p /data /config/caddy /data/caddy; \
-    chown -R caddy:caddy /data /config /etc/caddy
+RUN addgroup -S -g 1000 caddy \
+    && adduser -S -u 1000 -G caddy -H -D caddy \
+    && mkdir -p /data \
+    && chown -R caddy:caddy /data /config /etc/caddy
 
 USER caddy
 

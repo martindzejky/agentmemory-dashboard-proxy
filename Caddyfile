@@ -50,8 +50,7 @@
 		X-Frame-Options "DENY"
 		X-Content-Type-Options "nosniff"
 		Referrer-Policy "same-origin"
-		Permissions-Policy "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()"
-		-Server
+		Permissions-Policy "camera=(), microphone=(), geolocation=()"
 	}
 
 	handle /healthz {
