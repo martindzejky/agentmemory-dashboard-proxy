@@ -13,6 +13,11 @@
 		local identity store localdb {
 			realm local
 			path /data/users.json
+			user {$AUTHP_ADMIN_USER} {
+				email {$AUTHP_ADMIN_EMAIL}
+				password "{$AUTHP_ADMIN_PASSWORD_HASH}" overwrite
+				roles authp/admin authp/user
+			}
 		}
 
 		authentication portal dashboard_portal {
@@ -40,12 +45,27 @@
 }
 
 :{$PORT} {
+	header {
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		X-Frame-Options "DENY"
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "same-origin"
+		Permissions-Policy "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()"
+		-Server
+	}
+
+	handle /healthz {
+		respond "ok" 200
+	}
+
 	handle /auth* {
 		authenticate with dashboard_portal
 	}
 
 	handle {
 		authorize with dashboard_policy
-		reverse_proxy {$UPSTREAM_URL}
+		reverse_proxy {$UPSTREAM_URL} {
+			header_up Authorization "Bearer {env.AGENTMEMORY_VIEWER_PROXY_SECRET}"
+		}
 	}
 }
